@@ -11,6 +11,9 @@ app.get('/', (req, res) => {
   res.send('Hello Ipek!')
 })
 
+//Available routes
+app.use('/api/auth',require('./routes/auth'))
+
 
 
 app.listen(port, () => {
@@ -19,3 +22,5 @@ app.listen(port, () => {
 
 
 connectToMongo();
+
+
