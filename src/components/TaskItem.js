@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
+import TaskContext from "../context/Tasks/TaskContext";
 
 const TaskItem = () => {
+  // Get the sample value from the TaskContext
+  const value = useContext(TaskContext);
+
   return (
     <div>
+      <span>{value}</span>
       <table className="table mb-4">
         <thead>
           <tr>
