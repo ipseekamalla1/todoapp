@@ -56,4 +56,70 @@ router.post(
     }
   }
 );
+
+//ROUTE 3 - Update existing Note:  POST- api/notes/updatenote: Login Required
+
+router.put(
+  "/edittask/:id",
+  fetchuser,
+
+  async (req, res) => {
+    //Fetch the body of new edited task and save it in variable
+    const { taskName,status } = req.body;
+
+    //Create a newTask object
+    const newTask = {};
+    if (taskName) {
+      newTask.taskName = taskName;
+    }
+    if (status) {
+      newTask.status = status;
+    }
+
+    //Fetch the existing task by using ID 
+    let task = await Task.findById(req.params.id);
+    if (!task) {
+      return res.status(404).send("Not Found");//User Not Found
+    }
+    //Check if it is authorized user
+    if (task.user.toString() !== req.user.id) {
+      return res.status(401).send("Not Allowed");
+    }
+
+    //Fetch the existing task by using ID and update it
+    task = await Task.findByIdAndUpdate(
+      req.params.id,
+      { $set: newTask },
+      { new: true }
+    );
+    res.json({ task });
+  }
+);
+
+//ROUTE 4 - Delete existing Task:  POST- api/notes/deletetask: Login Required
+
+router.delete(
+  "/deletetask/:id",
+  fetchuser,
+  async (req, res) => {
+  
+    //Find the task to be deleted by id 
+    let task = await Task.findById(req.params.id);
+    if (!task) {
+      return res.status(404).send("Not Found");//Task not found
+    }
+
+    //Allows deletetion only if user owns this task
+    if (task.user.toString() !== req.user.id) {
+      return res.status(401).send("Not Allowed");
+    }
+    
+     //Find the task to be deleted by id and delete it 
+    task = await Task.findByIdAndDelete(
+      req.params.id,
+    );
+    res.json({ "Success":"Task has been deleted" });
+  }
+);
+
  module.exports=router
