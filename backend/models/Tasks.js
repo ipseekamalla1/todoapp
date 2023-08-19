@@ -5,22 +5,21 @@ const TasksSchema = new connectToMongo.Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'user'
-
     },
 
    taskName:{
         type:String,
         required:true
     },
-
+    status:{
+        type: String,
+        enum: ['To do', 'In Progress','Completed'],
+    },
     dateAdded:{
         type:Date,
         default:Date.now
-    },
-    status:{
-        type:Date,
-        default: "Todo"
     }
+    
     
 
 });
