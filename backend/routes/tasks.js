@@ -4,7 +4,7 @@ const router = express.Router();
 const Task = require("../models/Tasks");
 const { body, validationResult } = require("express-validator");
 
-//ROUTE 2 - Add a new Note:  POST- api/notes/addnote: Login Required
+//ROUTE 2 - Add a new Task:  POST- api/tasks/addtask: Login Required
 
 router.post(
   "/addtask",

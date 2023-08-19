@@ -12,10 +12,11 @@ router.get("/", (req, res) => {
   res.send("THIS IS AUTH PAGE");
 });
 
-// ROUTE 1 - Create a User using: POST '/api/auth/signup'. Doesnt required auth
+// ROUTE 1 - Create a User using: POST '/api/auth/signup'. Doesn't required auth
 router.post(
   "/signup",
   [
+    //Writing all variable in body
     body("firstName","First Name cannot be blank").exists(),
     body("lastName","Last Name cannot be blank").exists(),
     body(
@@ -40,6 +41,7 @@ router.post(
     body("gender", "Gender should be 'Male' or 'Female'").isIn(['Male', 'Female']), 
 
   ],
+
   async (req, res) => {
     let success = false;
     //If there are erros,return Bad request and the errors
@@ -56,7 +58,7 @@ router.post(
           .status(400)
           .json({ success, error: "User already exists.Try Again" });
       }
-      //Hash Password fro Security
+      //Hash Password for Security
       const salt = await bcrypt.genSalt(10);
       const secPass = await bcrypt.hash(req.body.password, salt);
 
@@ -94,11 +96,13 @@ router.post(
 router.post(
   "/login",
   [
+    //Writing in body
     body("email", "Enter a valid email").isEmail(),
     body("password", "Password cannot be blank").exists(),
   ],
   async (req, res) => {
     let success = false;
+
     //If there are errors,return Bad request and the errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -108,6 +112,7 @@ router.post(
     const { email, password } = req.body;
 
     try {
+      //Check if the user credentials are correct or not
       let user = await User.findOne({ email });
       if (!user) {
         success = false;
@@ -116,6 +121,7 @@ router.post(
           error: "Please try to login with correct credentials",
         });
       }
+      //Compare the user password with hash password
       const passwordCompare = await bcrypt.compare(password, user.password);
       if (!passwordCompare) {
         success = false;
@@ -125,13 +131,18 @@ router.post(
           error: "Please try to login with correct credentials",
         });
       }
+
+      //Add the user credential in data
       const data = {
         user: {
           id: user.id,
         },
       };
+      //Fetch auth-token of user
       const authtoken = jwt.sign(data, JWT_SECRET);
       success = true;
+
+      //Print success with auth-token
       res.json({ success, authtoken });
     } catch (error) {
       console.error(error.message);
@@ -145,6 +156,7 @@ router.post(
 
 router.post("/getuser", fetchuser, async (req, res) => {
   try {
+    //Finf the user by using the id
     const userId = req.user.id;
     const user = await User.findById(userId).select("-password");
     res.send(user);
