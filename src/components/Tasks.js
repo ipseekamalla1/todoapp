@@ -40,7 +40,9 @@ const Tasks = () => {
               <div className="card rounded-3">
                 <div className="card-body p-4">
                   <AddTasks />
+                
                   <div className="container">
+
                     {tasks.length === 0 && "No Notes to display"}
                   </div>
                   {tasks.length > 0 && <TaskTable tasks={tasks} />}
