@@ -20,8 +20,9 @@ const TaskState = (props) => {
     const json = await response.json();
     setTasks(json);
   };
-  //Add a task
 
+
+  //Add a task
   const addTask = async (taskName,status) => {
     //API Call
     const response = await fetch(`${host}/api/tasks/addtask`, {
@@ -37,8 +38,29 @@ const TaskState = (props) => {
     setTasks(tasks.concat(task));
   };
 
+
+
+  //Delete a task
+  const deleteTask = async (id) => {
+    const response = await fetch(`${host}/api/tasks/deletetask/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkZmE2NGJiZDAyOTNlODNlZjViNGQ3In0sImlhdCI6MTY5MjM3ODcyMX0.0apdwFjQmC9eOsZN-PTI4mj2RBUKB7S-m15r6eKrs2w",
+
+      },
+    });
+    const json = response.json();
+    console.log(json);
+
+    const newTasks = tasks.filter((task) => {
+      return task._id !== id;
+    });
+    setTasks(newTasks);
+  };
+
   return (
-    <TaskContext.Provider value={{tasks, getTasks, addTask}}>{props.children}</TaskContext.Provider>
+    <TaskContext.Provider value={{tasks, getTasks, addTask,deleteTask}}>{props.children}</TaskContext.Provider>
   );
 };
 
