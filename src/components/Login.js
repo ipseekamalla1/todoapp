@@ -1,8 +1,38 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React,{useState} from "react";
+import { Link,useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
+  let navigate = useNavigate();
+
+
+
+  const onChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
+ const handleSubmitButton= async (e)=>{
+    e.preventDefault();
+    const response = await fetch(`http://localhost:8848/api/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: credentials.email,
+        password: credentials.password,
+      }),
+    });
+    const json = await response.json();
+    console.log(json);
+    if(json.success){
+        navigate('/');
+      }
+      else{
+        navigate('/login')
+  
+      }
+
+ }
 
   return (
     <>
@@ -16,11 +46,12 @@ const Login = () => {
                   <form
                     method="POST"
                     className="needs-validation"
-                    novalidate=""
-                    autocomplete="off"
+                    
+                    autoComplete="off"
+                    onSubmit={handleSubmitButton}
                   >
                     <div className="mb-3">
-                      <label className="mb-2 text-muted" for="email">
+                      <label className="mb-2 text-muted" htmlFor="email">
                         Email
                       </label>
                       <input
@@ -28,16 +59,18 @@ const Login = () => {
                         type="email"
                         className="form-control"
                         name="email"
-                        value=""
+                        value={credentials.email}
                         required
-                        autofocus
+                    
+                        onChange={onChange}
+                        
                       />
                       <div className="invalid-feedback">Email is invalid</div>
                     </div>
 
                     <div className="mb-3">
                       <div className="mb-2 w-100">
-                        <label className="text-muted" for="password">
+                        <label className="text-muted" htmlFor="password">
                           Password
                         </label>
                         <a href="forgot.html" className="float-end">
@@ -47,9 +80,11 @@ const Login = () => {
                       <input
                         id="password"
                         type="password"
+                        value={credentials.password}
                         className="form-control"
                         name="password"
                         required
+                        onChange={onChange}
                       />
                       <div className="invalid-feedback">
                         Password is required
@@ -64,7 +99,7 @@ const Login = () => {
                           id="remember"
                           className="form-check-input"
                         />
-                        <label for="remember" className="form-check-label">
+                        <label htmlFor="remember" className="form-check-label">
                           Remember Me
                         </label>
                       </div>
