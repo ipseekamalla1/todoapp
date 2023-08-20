@@ -1,104 +1,103 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const SignUp = () => {
   return (
-    <div>
-      <section
-        class="vh-100 "
-      >
-        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-          <div class="container h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-              <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                <div class="card" style="border-radius: 15px;">
-                  <div class="card-body p-5">
-                    <h2 class="text-uppercase text-center mb-5">
-                      Create an account
-                    </h2>
-
-                    <form>
-                      <div class="form-outline mb-4">
-                        <input
-                          type="text"
-                          id="form3Example1cg"
-                          class="form-control form-control-lg"
-                        />
-                        <label class="form-label" for="form3Example1cg">
-                          Your Name
-                        </label>
-                      </div>
-
-                      <div class="form-outline mb-4">
-                        <input
-                          type="email"
-                          id="form3Example3cg"
-                          class="form-control form-control-lg"
-                        />
-                        <label class="form-label" for="form3Example3cg">
-                          Your Email
-                        </label>
-                      </div>
-
-                      <div class="form-outline mb-4">
-                        <input
-                          type="password"
-                          id="form3Example4cg"
-                          class="form-control form-control-lg"
-                        />
-                        <label class="form-label" for="form3Example4cg">
-                          Password
-                        </label>
-                      </div>
-
-                      <div class="form-outline mb-4">
-                        <input
-                          type="password"
-                          id="form3Example4cdg"
-                          class="form-control form-control-lg"
-                        />
-                        <label class="form-label" for="form3Example4cdg">
-                          Repeat your password
-                        </label>
-                      </div>
-
-                      <div class="form-check d-flex justify-content-center mb-5">
-                        <input
-                          class="form-check-input me-2"
-                          type="checkbox"
-                          value=""
-                          id="form2Example3cg"
-                        />
-                        <label class="form-check-label" for="form2Example3g">
-                          I agree all statements in{" "}
-                          <a href="#!" class="text-body">
-                            <u>Terms of service</u>
-                          </a>
-                        </label>
-                      </div>
-
-                      <div class="d-flex justify-content-center">
-                        <button
-                          type="button"
-                          class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
-                        >
-                          Register
-                        </button>
-                      </div>
-
-                      <p class="text-center text-muted mt-5 mb-0">
-                        Have already an account?{" "}
-                        <a href="#!" class="fw-bold text-body">
-                          <u>Login here</u>
-                        </a>
-                      </p>
-                    </form>
+    <div className="container h-100">
+      <div className="row h-100 justify-content-center align-items-center">
+        <div className="col-md-6">
+          <div className="card shadow">
+            <div className="card-body p-4">
+              <h2 className="card-title text-center mb-4">Sign Up</h2>
+              <form>
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <label htmlFor="firstName" className="form-label">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="firstName"
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label htmlFor="lastName" className="form-label">
+                      Last Name
+                    </label>
+                    <input type="text" className="form-control" id="lastName" />
                   </div>
                 </div>
+                <div className="mb-3">
+                  <label htmlFor="username" className="form-label">
+                    Username
+                  </label>
+                  <input type="text" className="form-control" id="username" />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="email" className="form-label">
+                    Email
+                  </label>
+                  <input type="email" className="form-control" id="email" />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">
+                    Confirm Password
+                  </label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                  />
+                </div>
+
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <label htmlFor="phone" className="form-label">
+                      Phone Number
+                    </label>
+                    <input type="tel" className="form-control" id="phone" />
+                  </div>
+                  <div className="col-md-6">
+                    <label htmlFor="gender" className="form-label">
+                      Gender
+                    </label>
+                    <select className="form-select" id="gender">
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </div>
+                <button type="submit" className="btn btn-primary ms-auto">
+                  Create Your Account
+                </button>
+                
+              </form>
+            </div>
+            <div className="card-footer py-3 border-0">
+              <div className="text-center">
+            Already have an account?{" "}
+                <Link to="/login" className="text-dark">
+                 Login Here
+                </Link>
               </div>
             </div>
           </div>
+          <div className="text-center mt-5 text-muted">
+            Copyright &copy; 2023 &mdash; To Do App
+          </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };
