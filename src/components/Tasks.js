@@ -16,7 +16,7 @@ const TaskTable = ({ tasks }) => {
       </thead>
       <tbody>
         {tasks.map((task, index) => (
-          <TaskItem key={task._id} task={task} index={index + 1} />
+          <TaskItem key={index} task={task} index={index + 1} />
         ))}
       </tbody>
     </table>

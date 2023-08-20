@@ -3,21 +3,18 @@ import React from 'react'
 const Sample = () => {
   return (
     <div>
-      <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Hello</td>
-            <td>hELLO</td>
-            <td>
-              <button type="submit" className="btn btn-danger">
-                Delete
-              </button>
-              <button type="submit" className="btn btn-secondary ms-1">
-                Edit
-              </button>
-            </td>
-          </tr>
-        </tbody>
+     <select
+  className="form-select"
+  aria-label="Status"
+  value={task.status}
+  onChange={onChange}
+  name="status"
+>
+  <option value="To do">To do</option>
+  <option value="In Progress">In Progress</option>
+  <option value="Completed">Completed</option>
+</select>
+
     </div>
   )
 }
