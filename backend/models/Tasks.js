@@ -13,7 +13,7 @@ const TasksSchema = new connectToMongo.Schema({
     },
     status:{
         type: String,
-        enum: ['To do', 'In Progress','Completed'],
+        enum: ['To Do', 'In Progress','Completed'],
     },
     dateAdded:{
         type:Date,

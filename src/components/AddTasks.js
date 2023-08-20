@@ -38,7 +38,7 @@ const AddTasks = () => {
             onChange={onChange}
             name="status"
           >
-            <option value="To do">To do</option>
+            <option value="To Do">To Do</option>
             <option value="In Progress">In Progress</option>
             <option value="Completed">Completed</option>
           </select>

@@ -23,8 +23,8 @@ router.post(
     body("taskName", "Enter a title").isLength({ min: 3 }),
     body(
       "status",
-      "Status should be 'To do','In Progress' or 'Completed'"
-    ).isIn(["To do", "In Progress", "Completed"]),
+      "Status should be 'To Do','In Progress' or 'Completed'"
+    ).isIn(["To Do", "In Progress", "Completed"]),
   ],
 
   async (req, res) => {
