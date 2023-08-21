@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import TaskContext from "../context/Tasks/TaskContext";
 
-const TaskItem = ({ task, index, updateTask }) => {
+const TaskItem = ({ task, index, updateTask,showAlert }) => {
   const context = useContext(TaskContext);
   const { deleteTask } = context;
 
@@ -16,6 +16,7 @@ const TaskItem = ({ task, index, updateTask }) => {
           className="btn btn-danger"
           onClick={() => {
             deleteTask(task._id);
+            showAlert("Task Deleted Successfully", "success");
           }}
         >
           Delete

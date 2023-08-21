@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import TaskContext from "../context/Tasks/TaskContext";
 
-const AddTasks = () => {
+const AddTasks = (props) => {
   const context = useContext(TaskContext);
   const { addTask } = context;
   const [task, setTask] = useState({ taskName: " ", status: " " });
@@ -13,6 +13,7 @@ const AddTasks = () => {
   const handleAddClick = (e) => {
     e.preventDefault();
     addTask(task.taskName, task.status);
+    props.showAlert("Task Added Successfully", "success");
   };
 
   return (
@@ -27,6 +28,7 @@ const AddTasks = () => {
               className="form-control my-2"
               placeholder="Enter you task"
               onChange={onChange}
+              value={task.taskName}
             />
           </div>
         </div>

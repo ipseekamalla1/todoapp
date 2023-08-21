@@ -4,7 +4,7 @@ import TaskItem from "./TaskItem";
 import TaskContext from "../context/Tasks/TaskContext";
 import { useNavigate } from "react-router-dom";
 
-const TaskTable = ({ tasks, updateTask }) => {
+const TaskTable = ({ tasks, updateTask ,showAlert}) => {
   
   return (
     <table className="table mb-4">
@@ -18,14 +18,17 @@ const TaskTable = ({ tasks, updateTask }) => {
       </thead>
       <tbody>
         {tasks.map((task, index) => (
-          <TaskItem key={index} task={task} index={index + 1} updateTask={updateTask} />
+          <TaskItem key={index} task={task} index={index + 1} updateTask={updateTask} showAlert={showAlert} />
         ))}
       </tbody>
     </table>
   );
 };
 
-const Tasks = () => {
+const Tasks = (props) => {
+   
+  const {showAlert}=props
+
   const context = useContext(TaskContext);
   const { tasks, getTasks, editTask } = context;
   const [task, setTask] = useState({ id: "", etaskName: "", estatus: "" });
@@ -45,9 +48,10 @@ const Tasks = () => {
     setTask({ ...task, [e.target.name]: e.target.value });
   };
 
-  const handleAddClick = () => {
+  const handleAddClick = (showAlert) => {
     console.log("Editing success", task);
     editTask(task.id, task.etaskName, task.estatus);
+    showAlert("Task Updated Successfully", "success");
     refClose.current.click();
   };
 
@@ -69,7 +73,7 @@ const Tasks = () => {
             <div className="col col-lg-9 col-xl-7">
               <div className="card rounded-3">
                 <div className="card-body p-4">
-                  <AddTasks />
+                  <AddTasks showAlert={showAlert}/>
                   <button
                     ref={ref}
                     type="button"
@@ -114,7 +118,7 @@ const Tasks = () => {
                               aria-describedby="emailHelp"
                               placeholder="Enter your task"
                               onChange={onChange}
-                              value={task.taskName}
+                              value={task.etaskName}
                             />
                           </div>
 
@@ -123,7 +127,7 @@ const Tasks = () => {
                             <select
                               className="form-select"
                               aria-label="Status"
-                              value={task.status}
+                              value={task.estatus}
                               onChange={onChange}
                               name="estatus"
                               id="estatus"
@@ -146,7 +150,10 @@ const Tasks = () => {
                           <button
                             type="button"
                             className="btn btn-primary"
-                            onClick={handleAddClick}
+                            onClick={() => {
+                              {handleAddClick(showAlert)};
+                              
+                            }}
                           >
                             Update Task
                           </button>
@@ -158,7 +165,7 @@ const Tasks = () => {
                   <div className="container">
                     {tasks.length === 0 && "No Notes to display"}
                   </div>
-                  {tasks.length > 0 && <TaskTable tasks={tasks} updateTask={updateTask} />}
+                  {tasks.length > 0 && <TaskTable tasks={tasks} updateTask={updateTask} showAlert={props.showAlert} />}
                 </div>
               </div>
             </div>
