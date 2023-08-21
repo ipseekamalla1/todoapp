@@ -18,7 +18,7 @@ const AddTasks = (props) => {
       return; // Exit the function if taskName is blank or too short
     }
     addTask(task.taskName, task.status);
-    props.showAlert("Task Created Successfully", "success");
+    props.showAlert("Task Added Successfully", "success");
     setTask({ taskName: "", status: "To Do" });
     setIsFormValid(true); // Reset form validation status
   };
@@ -35,7 +35,9 @@ const AddTasks = (props) => {
               type="text"
               id="task"
               name="taskName"
-              className={`form-control my-2 ${isFormValid ? "" : "is-invalid"}`}
+              className={`form-control my-2 ${
+                isFormValid ? "" : "is-invalid"
+              }`}
               placeholder="Enter your task"
               onChange={onChange}
               value={task.taskName}

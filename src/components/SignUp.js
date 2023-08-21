@@ -11,6 +11,9 @@ const SignUp = (props) => {
     phoneNumber: "",
     gender: "",
   });
+  const [phoneNumberError, setPhoneNumberError] = useState(""); // State for phone number error message
+  const [passwordMatchError, setPasswordMatchError] = useState(""); // State for password match error message
+
   let navigate = useNavigate();
 
   const onChange = (e) => {
@@ -43,6 +46,21 @@ const SignUp = (props) => {
         gender,
       }),
     });
+
+    if (credentials.phoneNumber.length !== 10) {
+      setPhoneNumberError("Phone number should be 10 digits");
+      return;
+    } else {
+      setPhoneNumberError(""); // Clear the error message if the phone number is valid
+    }
+    
+    if (credentials.password !== credentials.cpassword) {
+      setPasswordMatchError("Passwords do not match");
+      return;
+    } else {
+      setPasswordMatchError(""); // Clear the error message if passwords match
+    }
+
     const json = await response.json();
     console.log(json);
     if (json.success) {
@@ -61,7 +79,7 @@ const SignUp = (props) => {
           <div className="card shadow">
             <div className="card-body p-4">
               <h2 className="card-title text-center mb-4">Sign Up</h2>
-              <form onSubmit={handleSubmitButton}>
+              <form onSubmit={handleSubmitButton} className="needs-validation">
                 <div className="row mb-3">
                   <div className="col-md-6">
                     <label htmlFor="firstName" className="form-label">
@@ -73,6 +91,7 @@ const SignUp = (props) => {
                       id="firstName"
                       onChange={onChange}
                       name="firstName"
+                      
                     />
                   </div>
                   <div className="col-md-6">
@@ -85,6 +104,7 @@ const SignUp = (props) => {
                       id="lastName"
                       name="lastName"
                       onChange={onChange}
+                      required
                     />
                   </div>
                 </div>
@@ -98,6 +118,9 @@ const SignUp = (props) => {
                     id="userName"
                     name="userName"
                     onChange={onChange}
+                    minLength={8}
+                    required={true}
+                    
                   />
                 </div>
                 <div className="mb-3">
@@ -110,6 +133,7 @@ const SignUp = (props) => {
                     id="email"
                     name="email"
                     onChange={onChange}
+                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -122,6 +146,7 @@ const SignUp = (props) => {
                     id="password"
                     name="password"
                     onChange={onChange}
+                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -130,11 +155,15 @@ const SignUp = (props) => {
                   </label>
                   <input
                     type="password"
-                    className="form-control"
+                    className={`form-control ${passwordMatchError ? "is-invalid" : ""}`}
                     id="cpassword"
                     name="cpassword"
                     onChange={onChange}
+                    required
                   />
+                  {passwordMatchError && (
+                  <div className="invalid-feedback">{passwordMatchError}</div>
+                )}
                 </div>
 
                 <div className="row mb-3">
@@ -143,12 +172,18 @@ const SignUp = (props) => {
                       Phone Number
                     </label>
                     <input
-                      type="tel"
-                      className="form-control"
+                       type="text" // Change the input type to "text"
+                       className={`form-control ${phoneNumberError ? "is-invalid" : ""}`}
                       id="phoneNumber"
                       name="phoneNumber"
                       onChange={onChange}
+                      title="Enter 10 digits phone number"
+                     
+                      required
                     />
+                    {phoneNumberError && (
+                <div className="invalid-feedback">{phoneNumberError}</div>
+              )}
                   </div>
                   <div className="col-md-6">
                     <label htmlFor="gender" className="form-label">
@@ -159,6 +194,7 @@ const SignUp = (props) => {
                       id="gender"
                       name="gender"
                       onChange={onChange}
+                      required
                     >
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>

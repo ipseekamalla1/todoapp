@@ -4,6 +4,9 @@ import { Link,useNavigate } from "react-router-dom";
 const Login = (props) => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   let navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(""); // State to hold the error message
+  
+
 
 
 
@@ -30,7 +33,8 @@ const Login = (props) => {
         navigate('/');
       }
       else{
-        props.showAlert("Invalid Details","danger")
+        setErrorMessage("Invalid Email or Username"); // Set the error message
+
   
       }
 
@@ -110,6 +114,7 @@ const Login = (props) => {
                       </button>
                     </div>
                   </form>
+                  <div className="text-center text-danger mt-2">{errorMessage}</div> {/* Display error message */}
                 </div>
                 <div className="card-footer py-3 border-0">
                   <div className="text-center">
