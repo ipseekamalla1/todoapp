@@ -1,9 +1,11 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useState, useRef,use } from "react";
 import AddTasks from "./AddTasks";
 import TaskItem from "./TaskItem";
 import TaskContext from "../context/Tasks/TaskContext";
+import { useNavigate } from "react-router-dom";
 
 const TaskTable = ({ tasks, updateTask }) => {
+  
   return (
     <table className="table mb-4">
       <thead>
@@ -27,11 +29,15 @@ const Tasks = () => {
   const context = useContext(TaskContext);
   const { tasks, getTasks, editTask } = context;
   const [task, setTask] = useState({ id: "", etaskName: "", estatus: "" });
+  let navigate = useNavigate();
 
   useEffect(() => {
-    getTasks();
-  }, [getTasks]);
-
+    if (localStorage.getItem('token')) {
+      getTasks();
+    } else {
+      navigate('/login');
+    }
+  });
   const ref = useRef(null);
   const refClose = useRef(null);
 

@@ -15,7 +15,7 @@ const TaskState = (props) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkZmE2NGJiZDAyOTNlODNlZjViNGQ3In0sImlhdCI6MTY5MjM3ODcyMX0.0apdwFjQmC9eOsZN-PTI4mj2RBUKB7S-m15r6eKrs2w"
+        "auth-token": localStorage.getItem("token")
       },
     });
     // Save the task in setTask
@@ -31,7 +31,7 @@ const TaskState = (props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkZmE2NGJiZDAyOTNlODNlZjViNGQ3In0sImlhdCI6MTY5MjM3ODcyMX0.0apdwFjQmC9eOsZN-PTI4mj2RBUKB7S-m15r6eKrs2w",
+        "auth-token": localStorage.getItem("token")
       },
       body: JSON.stringify({ taskName,status }),
     });
@@ -49,7 +49,7 @@ const TaskState = (props) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkZmE2NGJiZDAyOTNlODNlZjViNGQ3In0sImlhdCI6MTY5MjM3ODcyMX0.0apdwFjQmC9eOsZN-PTI4mj2RBUKB7S-m15r6eKrs2w",
+        "auth-token": localStorage.getItem("token")
 
       },
     });
@@ -71,7 +71,7 @@ const TaskState = (props) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkZmE2NGJiZDAyOTNlODNlZjViNGQ3In0sImlhdCI6MTY5MjM3ODcyMX0.0apdwFjQmC9eOsZN-PTI4mj2RBUKB7S-m15r6eKrs2w",
+        "auth-token": localStorage.getItem("token")
       },
 
       body: JSON.stringify({ taskName,status }),

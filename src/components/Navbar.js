@@ -1,7 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React,{useEffect} from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  let navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
+  let location = useLocation();
+  useEffect(() => {
+    console.log(location);
+  }, [location]);
+
   return (
     <div>
       {/* Navbar */}
@@ -20,12 +32,24 @@ const Navbar = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-
-            
-              <Link to="/login" className="btn btn-warning mx-2">Login</Link>
-            
-              <Link to="/signup" className="btn btn-warning mx-2">SignUp</Link>
-           
+            {!localStorage.getItem("token") ? (
+              <form className="d-flex">
+                <Link
+                  className="btn btn-warning mx-2"
+                  to="/login"
+                  role="button"
+                >
+                  Login
+                </Link>
+                <Link className="btn btn-warning" to="/signup" role="button">
+                  Signup
+                </Link>
+              </form>
+            ) : (
+              <button onClick={handleLogout} className="btn btn-warning">
+                Logout
+              </button>
+            )}
           </div>
         </div>
       </nav>
