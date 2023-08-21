@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   let navigate = useNavigate();
+  
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -14,11 +15,21 @@ const Navbar = () => {
     console.log(location);
   }, [location]);
 
+  const isAuthenticated = !!localStorage.getItem("token");
+  const [userDetails, setUserDetails] = useState({
+    email: localStorage.getItem("email"),
+    userName: localStorage.getItem("userName"),
+  });  
+
   return (
     <div>
       {/* Navbar */}
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
+        <span className="navbar-text">
+        {isAuthenticated ? `Hello ${userDetails.userName}` : "Hello Guest"}
+        
+            </span>
           <button
             className="navbar-toggler"
             type="button"
@@ -32,7 +43,8 @@ const Navbar = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-            {!localStorage.getItem("token") ? (
+            
+            {!isAuthenticated ? (
               <form className="d-flex">
                 <Link
                   className="btn btn-warning mx-2"

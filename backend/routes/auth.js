@@ -99,6 +99,7 @@ router.post(
     //Writing in body
     body("email", "Enter a valid email").isEmail(),
     body("password", "Password cannot be blank").exists(),
+    
   ],
   async (req, res) => {
     let success = false;
@@ -152,14 +153,16 @@ router.post(
 );
 
 
-//ROUTE 3 - Logged in User's Information: POST- api/auth/getuser: Login Required
+//ROUTE 3 - Logged in User's Information:GET- api/auth/getuser: Login Required
 
-router.post("/getuser", fetchuser, async (req, res) => {
+router.get("/getuser", fetchuser, async (req, res) => {
+
   try {
     //Finf the user by using the id
     const userId = req.user.id;
     const user = await User.findById(userId).select("-password");
     res.send(user);
+  
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal Server Error ");

@@ -1,19 +1,16 @@
-import React,{useState} from "react";
-import { Link,useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = (props) => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   let navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(""); // State to hold the error message
-  
-
-
-
+  const [userDetails, setUserDetails] = useState({ email: "", userName: "" });
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
- const handleSubmitButton= async (e)=>{
+  const handleSubmitButton = async (e) => {
     e.preventDefault();
     const response = await fetch(`http://localhost:8848/api/auth/login`, {
       method: "POST",
@@ -27,18 +24,36 @@ const Login = (props) => {
     });
     const json = await response.json();
     console.log(json);
-    if(json.success){
-       localStorage.setItem('token',json.authtoken);
-       props.showAlert("Logged in Successfully","success")
-        navigate('/');
-      }
-      else{
-        setErrorMessage("Invalid Email or Username"); // Set the error message
+    if (json.success) {
+      localStorage.setItem("token", json.authtoken);
 
-  
-      }
+      props.showAlert("Logged in Successfully", "success");
+      navigate("/");
+      const userResponse = await fetch(
+        `http://localhost:8848/api/auth/getuser`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": json.authtoken,
+          },
+        }
+      );
+      const userJson = await userResponse.json();
 
- }
+      if (userJson._id) {
+        localStorage.setItem("email", userJson.email);
+        localStorage.setItem("userName", userJson.userName);
+        setUserDetails({
+          email: userJson.email,
+          userName: userJson.userName,
+        });
+        
+      }
+    } else {
+      setErrorMessage("Invalid Email or Password"); // Set the error message
+    }
+  };
 
   return (
     <>
@@ -52,7 +67,6 @@ const Login = (props) => {
                   <form
                     method="POST"
                     className="needs-validation"
-                    
                     autoComplete="off"
                     onSubmit={handleSubmitButton}
                   >
@@ -67,9 +81,7 @@ const Login = (props) => {
                         name="email"
                         value={credentials.email}
                         required
-        
                         onChange={onChange}
-                        
                       />
                       <div className="invalid-feedback">Email is invalid</div>
                     </div>
@@ -114,7 +126,10 @@ const Login = (props) => {
                       </button>
                     </div>
                   </form>
-                  <div className="text-center text-danger mt-2">{errorMessage}</div> {/* Display error message */}
+                  <div className="text-center text-danger mt-2">
+                    {errorMessage}
+                  </div>{" "}
+                  {/* Display error message */}
                 </div>
                 <div className="card-footer py-3 border-0">
                   <div className="text-center">
