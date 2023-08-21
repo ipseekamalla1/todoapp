@@ -48,6 +48,8 @@ const Login = (props) => {
           email: userJson.email,
           userName: userJson.userName,
         });
+
+        console.log(userDetails)
         
       }
     } else {
