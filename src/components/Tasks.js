@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState, useRef,use } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import AddTasks from "./AddTasks";
 import TaskItem from "./TaskItem";
 import TaskContext from "../context/Tasks/TaskContext";
 import { useNavigate } from "react-router-dom";
 
-const TaskTable = ({ tasks, updateTask ,showAlert}) => {
-  
+const TaskTable = ({ tasks, updateTask, showAlert }) => {
   return (
     <table className="table mb-4">
       <thead>
@@ -18,7 +17,13 @@ const TaskTable = ({ tasks, updateTask ,showAlert}) => {
       </thead>
       <tbody>
         {tasks.map((task, index) => (
-          <TaskItem key={index} task={task} index={index + 1} updateTask={updateTask} showAlert={showAlert} />
+          <TaskItem
+            key={index}
+            task={task}
+            index={index + 1}
+            updateTask={updateTask}
+            showAlert={showAlert}
+          />
         ))}
       </tbody>
     </table>
@@ -26,8 +31,7 @@ const TaskTable = ({ tasks, updateTask ,showAlert}) => {
 };
 
 const Tasks = (props) => {
-   
-  const {showAlert}=props
+  const { showAlert } = props;
 
   const context = useContext(TaskContext);
   const { tasks, getTasks, editTask } = context;
@@ -35,10 +39,10 @@ const Tasks = (props) => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem("token")) {
       getTasks();
     } else {
-      navigate('/login');
+      navigate("/login");
     }
   });
   const ref = useRef(null);
@@ -54,7 +58,6 @@ const Tasks = (props) => {
     showAlert("Task Updated Successfully", "success");
     refClose.current.click();
   };
-
 
   const updateTask = (currentTask) => {
     ref.current.click();
@@ -73,7 +76,7 @@ const Tasks = (props) => {
             <div className="col col-lg-9 col-xl-7">
               <div className="card rounded-3">
                 <div className="card-body p-4">
-                  <AddTasks showAlert={showAlert}/>
+                  <AddTasks showAlert={showAlert} />
                   <button
                     ref={ref}
                     type="button"
@@ -150,10 +153,7 @@ const Tasks = (props) => {
                           <button
                             type="button"
                             className="btn btn-primary"
-                            onClick={() => {
-                              {handleAddClick(showAlert)};
-                              
-                            }}
+                            onClick={() => handleAddClick(showAlert)}
                           >
                             Update Task
                           </button>
@@ -165,7 +165,13 @@ const Tasks = (props) => {
                   <div className="container">
                     {tasks.length === 0 && "No Notes to display"}
                   </div>
-                  {tasks.length > 0 && <TaskTable tasks={tasks} updateTask={updateTask} showAlert={props.showAlert} />}
+                  {tasks.length > 0 && (
+                    <TaskTable
+                      tasks={tasks}
+                      updateTask={updateTask}
+                      showAlert={props.showAlert}
+                    />
+                  )}
                 </div>
               </div>
             </div>
